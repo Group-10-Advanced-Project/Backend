@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TeamController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::Post('/team', [TeamController::class, 'addTeam']);
+Route::Get('/team', [TeamController::class, 'getAllTeams']);
+Route::Get('/team/{id}', [TeamController::class, 'getTeam']);
+Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
+Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
