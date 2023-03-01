@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,3 +23,13 @@ Route::Post('/employee',[EmployeeController::class,'addEmployee']);
 Route::Get('/employee/{id}',[EmployeeController::class,'getEmployee']);
 Route::Delete('/employee/{id}',[EmployeeController::class,'deleteEmployee']);
 Route::Patch('/employee/{id}',[EmployeeController::class,'editEmployee']);
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+});
