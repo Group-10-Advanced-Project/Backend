@@ -2,10 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\EvaluationController;
+
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+
 
 
 /*
@@ -22,6 +26,14 @@ use App\Http\Controllers\AdminController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Evaluation Route
+Route::Post('/evaluation', [EvaluationController::class,'addEvaluation']);
+Route::Get('/evaluation', [EvaluationController::class, 'getEvaluation']);
+Route::Get('/evaluation/{id}',[EvaluationController::class, 'getEvaluationById']);
+Route::Patch('/evaluation/{id}', [EvaluationController::class, 'updateEvaluation']);
+Route::Delete('/evaluation/{id}', [EvaluationController::class, 'deleteEvaluation']);
+
 //kpi routes
 Route::Post('/kpi',[KpiController::class,'addKpi']);
 Route::Get('/getkpi/{id}',[KpiController::class,'getKpi']);
@@ -52,6 +64,7 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 });
+
 
 
 
