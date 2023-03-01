@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::Post('/team', [TeamController::class, 'addTeam']);
 Route::Get('/team', [TeamController::class, 'getAllTeams']);
-Route::Get('/team/{id}', [TeamController::class, 'getTeam']);
+Route::Get('/team/teamname/{name}', [TeamController::class, 'getTeamByName']);
+Route::Get('/team/{id}', [TeamController::class, 'getTeamById']);
 Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
 Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
