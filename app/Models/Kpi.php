@@ -9,8 +9,16 @@ class Kpi extends Model
 {
     use HasFactory;
 
+
     //Relation For the Evaluation
     public function evaluation(){
         return $this-> hasMany(Evaluation::class);
     }
+
+    protected $fillable = [
+        'name',
+        'about',
+    ];
+
+
 }
