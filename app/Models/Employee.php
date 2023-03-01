@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+
+    // Relation For The Evaluation
+    public function evaluation(){
+        return $this-> hasMany(Evaluation::class);
+    }
 }
