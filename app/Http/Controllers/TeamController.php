@@ -149,19 +149,19 @@ class TeamController extends Controller
     }
     }
 
-    // public function getAllPagination() {
-    //     $data = Team::where('data', '<=', now())->orderBy('date', 'desc')->paginate(10);
-    //     foreach($data as $each) {
-    //         $each->team;
-    //         $each->recurring;
-    //     }
+    public function getAllPagination() {
+        $data = Team::where('data', '<=', now())->orderBy('date', 'desc')->paginate(10);
+        foreach($data as $each) {
+            $each->team;
+            $each->recurring;
+        }
 
-    //     $respond = [
-    //         "status" => 200,
-    //         "message" => "Successfully got Transactions",
-    //         "data" => $data
-    //     ];
+        $respond = [
+            "status" => 200,
+            "message" => "Successfully got Teams",
+            "data" => $data
+        ];
 
-    //     return response($respond, $respond["status"]);
-    // }
+        return response($respond, $respond["status"]);
+    }
 }
