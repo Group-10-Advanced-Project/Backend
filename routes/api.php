@@ -2,11 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KpiController;
 use App\Http\Controllers\EmployeeController;
-
 use App\Http\Controllers\AuthController;
-
 use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,12 @@ use App\Http\Controllers\AdminController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//kpi routes
+Route::Post('/kpi',[KpiController::class,'addKpi']);
+Route::Get('/getkpi/{id}',[KpiController::class,'getKpi']);
+Route::delete('/deletekpi/{id}',[KpiController::class,'deleteKpi']);    
+Route::Put('/editKpi/{id}',[KpiController::class,'editKpi']);    
+
 
 //admin routes
 Route::Post('/admin', [AdminController::class, "addAdmin"]);
@@ -46,5 +52,6 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 });
+
 
 
