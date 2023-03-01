@@ -10,9 +10,6 @@ use App\Models\Team;
 class TeamController extends Controller
 {
     public function addTeam(Request $request){
-        // $validated = $request->validate([
-        //     'name' => 'required|unique:posts|max:255',
-        // ]);
         $team = new Team;
         $name = $request->input('name');
         $team-> name = $name;
