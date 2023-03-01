@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TeamController;
+
 
 use App\Http\Controllers\EvaluationController;
 
@@ -67,4 +69,11 @@ Route::group([
 
 
 
+//team routes
 
+Route::Post('/team', [TeamController::class, 'addTeam']);
+Route::Get('/team', [TeamController::class, 'getAllTeams']);
+Route::Get('/team/teamname/{name}', [TeamController::class, 'getTeamByName']);
+Route::Get('/team/{id}', [TeamController::class, 'getTeamById']);
+Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
+Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);

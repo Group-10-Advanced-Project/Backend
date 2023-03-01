@@ -10,15 +10,13 @@ class Employee extends Model
     use HasFactory;
 
 
+
     // Relation For The Evaluation
     public function evaluation(){
         return $this-> hasMany(Evaluation::class);
     }
 
-//     public function team(){
-// return $this->belongsTo(Team::class);
 
-//     }
 protected $fillable = [
     'first_name',
     'email',
@@ -27,4 +25,8 @@ protected $fillable = [
     'employee_id',
 ];
 
+
+    public function team(){
+        return $this->belongsTo(Team::class);
+    }
 }
