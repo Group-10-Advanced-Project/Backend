@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KpiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::Post('/kpi',[KpiController::class,'addKpi']);
+Route::Get('/getkpi/{id}',[KpiController::class,'getKpi']);
+Route::delete('/deletekpi/{id}',[KpiController::class,'deleteKpi']);    
+Route::Put('/editKpi/{id}',[KpiController::class,'editKpi']);    
