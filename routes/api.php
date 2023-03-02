@@ -53,10 +53,13 @@ Route::delete('/deleteRole/{id}', [RoleController::class, 'deleteRole']);
 Route::Put('/editRole/{id}', [RoleController::class, 'editRole']);
 
 //employee routes
-Route::Post('/employee', [EmployeeController::class, 'addEmployee']);
-Route::Get('/employee/{id}', [EmployeeController::class, 'getEmployee']);
-Route::Delete('/employee/{id}', [EmployeeController::class, 'deleteEmployee']);
-Route::Patch('/employee/{id}', [EmployeeController::class, 'editEmployee']);
+
+Route::Post('/employee',[EmployeeController::class,'addEmployee']);
+Route::Get('/employee/{id}',[EmployeeController::class,'getEmployee']);
+Route::Delete('/employee/{id}',[EmployeeController::class,'deleteEmployee']);
+Route::Patch('/employee/{id}',[EmployeeController::class,'editEmployee']);
+Route::Get('/employee',[EmployeeController::class,'getAllEmployee']);
+
 
 //admin routes
 Route::group([
@@ -74,6 +77,7 @@ Route::group([
 
 
 
+
 //team routes
 
 Route::Post('/team', [TeamController::class, 'addTeam']);
@@ -83,7 +87,10 @@ Route::Get('/team/id/{id}', [TeamController::class, 'getTeamById']);
 Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
 Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
 
-Route::Post('/project', [ProjectController::class, 'addProject']);
-Route::Get('/project/{id}', [ProjectController::class, 'getProject']);
-Route::Delete('/project/{id}', [ProjectController::class, 'deleteProject']);
-Route::Patch('/project/{id}', [ProjectController::class, 'editProject']);
+
+Route::Post('/project',[ProjectController::class,'addProject']);
+Route::Get('/project/{id}',[ProjectController::class,'getProject']);
+Route::Delete('/project/{id}',[ProjectController::class,'deleteProject']);
+Route::Patch('/project/{id}',[ProjectController::class,'editProject']);
+Route::Get('/project',[ProjectController::class,'getAllProject']);
+

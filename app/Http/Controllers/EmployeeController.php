@@ -12,7 +12,7 @@ class EmployeeController extends Controller
 {
     public function addEmployee(Request $request)
     {
-        try {
+        
             $validator = Validator::make($request->all(), [
                 'employee_id' => 'required',
                 'first_name' => 'required',
@@ -24,9 +24,14 @@ class EmployeeController extends Controller
             ]);
 
             if ($validator->fails()) {
-                throw new \Exception(json_encode(['error' => $validator->errors()]), 422);
+                $employee = [
+                        
+                    'message' => $validator->errors()->first(),
+                    
+                ]; ;
+                return $employee;
             }
-
+            else{
             $employee = new Employee();
             $employee->first_name = $request->input('first_name');
             $employee->last_name = $request->input('last_name');
@@ -39,14 +44,12 @@ class EmployeeController extends Controller
             $team = Team::find($team_id);
             $employee->team()->associate($team);
             $employee->save();
-
+            
             return response()->json([
                 'message' => 'Employee created successfully!',
                 'employee'=>$employee,
             ]);
-        } catch (\Exception $err) {
-            return response()->json(['error' => json_decode($err->getMessage(), true)], $err->getCode());
-        }
+            }
     }
 
     public function getEmployee(Request $request, $id)
@@ -136,4 +139,24 @@ class EmployeeController extends Controller
             ], 500);
         }
     }
+
+
+    public function getAllEmployee(Request $request){
+        {
+           
+          
+            $perPage = $request->input('per_page', 10);
+
+            $employee = Employee::where('email', '<=', now())
+                ->with(['employee', 'recurring'])
+                ->orderBy('email')
+                ->paginate($perPage);
+        
+            return response()->json([
+                'message' => 'Successfully got Employee',
+                'data' => $employee,
+            ]);
+           
+        }
+}
 }
