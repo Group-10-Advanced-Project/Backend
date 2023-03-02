@@ -30,7 +30,7 @@ class KpiController extends Controller
             $kpi= new Kpi;
             $name=$request->input('name');
             $about=$request->input('about');
-            $kpi->name = $name;
+            $kpi->name = $name; 
             $kpi->about = $about;
             $kpi->save();  
             return response()->json([
@@ -43,6 +43,19 @@ class KpiController extends Controller
             ], 500);
         }
     }
+    public function getAllKpis(Request $request)
+{
+    $perPage = $request->input('per_page', 10);
+    $kpis = Kpi::paginate($perPage);
+
+    return response()->json($kpis);
+}
+
+
+
+
+
+
     
     public function getKpi(Request $request,$id){
         try {
