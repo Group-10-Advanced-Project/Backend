@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,8 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->string('picture')->nullable();
-            // $table->unsignedBigInteger('team_id')->unique();
-            // $table->foreign('team_id')->references('id')->on('teams')->onDelete(cascade);
+            $table->unsignedBigInteger('team_id')->unique();
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete(cascade);
             $table->timestamps();
         });
     }

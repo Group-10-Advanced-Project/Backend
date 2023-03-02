@@ -35,9 +35,9 @@ class EmployeeController extends Controller
             $employee->phone_number = $request->input('phone_number');
             $picture_path = $request->file('picture')->store('pictures', 'public');
             $employee->picture = $picture_path;
-            //$team_id = $request->input('team_id');
-            //$team = Team::find($team_id);
-            //$employee->team()->associate($team);
+            $team_id = $request->input('team_id');
+            $team = Team::find($team_id);
+            $employee->team()->associate($team);
             $employee->save();
 
             return response()->json([
@@ -51,7 +51,7 @@ class EmployeeController extends Controller
     public function getEmployee(Request $request, $id)
     {
         try {
-            $employee = Employee::where('id',$id)/*->with(['teams'])*/->get();
+            $employee = Employee::where('id', $id) /*->with(['teams'])*/->get();
 
             if (!$employee) {
                 throw new \Exception(json_encode(['error' => 'Employee not found']), 404);
@@ -75,7 +75,7 @@ class EmployeeController extends Controller
                 throw new \Exception(json_encode(['error' => 'Employee not found']), 404);
             }
 
-            Storage::delete('public/'.$employee->picture);
+            Storage::delete('public/' . $employee->picture);
             $employee->delete();
 
             return response()->json([
@@ -86,49 +86,49 @@ class EmployeeController extends Controller
         }
     }
     public function editEmployee(Request $request, $id)
-{
-    try {
-        $employee = Employee::findOrFail($id);
+    {
+        try {
+            $employee = Employee::findOrFail($id);
 
-        $validator = Validator::make($request->all(), [
-            'employee_id' => 'sometimes|required',
-            'first_name' => 'sometimes|required',
-            'last_name' => 'sometimes|required',
-            'email' => 'sometimes|required|email',
-            'phone_number' => 'sometimes|required',
-            'picture' => 'sometimes|required|image|max:2048',
-            // 'team_id' => 'sometimes|required',
-        ]);
+            $validator = Validator::make($request->all(), [
+                'employee_id' => 'sometimes|required',
+                'first_name' => 'sometimes|required',
+                'last_name' => 'sometimes|required',
+                'email' => 'sometimes|required|email',
+                'phone_number' => 'sometimes|required',
+                'picture' => 'sometimes|required|image|max:2048',
+                // 'team_id' => 'sometimes|required',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            // Update employee details
+            if ($request->hasFile('picture')) {
+                Storage::delete('public/' . $employee->picture);
+                $picture_path = $request->file('picture')->store('pictures', 'public');
+                $employee->picture = $picture_path;
+            }
+
+            $employee->update([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'phone_number' => $request->input('phone_number'),
+                'email' => $request->input('email'),
+                'employee_id' => $request->input('employee_id'),
+                // 'team_id' => $request->input('team_id'),
+            ]);
+
+            return response()->json([
+                'message' => 'Employee updated successfully',
+                'Employee' => $employee,
+            ]);
+
+        } catch (\Exception $err) {
+            return response()->json([
+                'error' => 'Error updating employee: ' . $err->getMessage(),
+            ], 500);
         }
-
-        // Update employee details
-        if ($request->hasFile('picture')) {
-            Storage::delete('public/'.$employee->picture);
-            $picture_path = $request->file('picture')->store('pictures', 'public');
-            $employee->picture = $picture_path;
-        }
-
-        $employee->update([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'phone_number' => $request->input('phone_number'),
-            'email' => $request->input('email'),
-            'employee_id' => $request->input('employee_id'),
-            // 'team_id' => $request->input('team_id'),
-        ]);
-
-        return response()->json([
-            'message'=>'Employee updated successfully',
-            'Employee' => $employee,
-        ]);
-
-    } catch (\Exception $err) {
-        return response()->json([
-            'error' => 'Error updating employee: ' . $err->getMessage(),
-        ], 500);
     }
-}
 }
