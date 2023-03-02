@@ -11,7 +11,7 @@ class ProjectController extends Controller
         // add project
         public function addProject (Request $request)
         {
-            try {
+            
                 $validator = Validator::make($request->all(), [
                     'name' => 'required',
                     'about' => 'required',
@@ -20,9 +20,14 @@ class ProjectController extends Controller
                 ]);
     
                 if ($validator->fails()) {
-                    throw new \Exception(json_encode(['error' => $validator->errors()]), 400);
+                    $project = [
+                        
+                        'message' => $validator->errors()->first(),
+                        
+                    ]; 
+                    return $project;  
                 }
-    
+                else{
                 $project= new Project();
                 $project->name = $request->input('name');
                 $project->about = $request->input('about');
@@ -37,9 +42,9 @@ class ProjectController extends Controller
                     'message' => 'Project created successfully!',
                     'project'=> $project,
                 ]);
-            } catch (\Exception $err) {
-                return response()->json(['error' => json_decode($err->getMessage(), true)], $err->getCode());
-            }
+
+                }
+        
         }
     //  get project
         public function getProject(Request $request, $id)
@@ -116,4 +121,28 @@ class ProjectController extends Controller
             ], 500);
         }
     }
+    public function getAllProject(Request $request){
+        {
+           
+          
+            $perPage = $request->input('per_page', 10);
+
+            $projects = Project::where('name', '<=', now())
+                ->with(['project', 'recurring'])
+                ->orderBy('name')
+                ->paginate($perPage);
+        
+            return response()->json([
+                'message' => 'Successfully got project',
+                'data' => $projects,
+            ]);
+           
+        }
+        
+        
+        
+        
+        
+        }
 }
+

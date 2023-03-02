@@ -9,7 +9,6 @@ use App\Http\Controllers\EvaluationController;
 
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProjectController;
@@ -64,17 +63,7 @@ Route::Post('/employee',[EmployeeController::class,'addEmployee']);
 Route::Get('/employee/{id}',[EmployeeController::class,'getEmployee']);
 Route::Delete('/employee/{id}',[EmployeeController::class,'deleteEmployee']);
 Route::Patch('/employee/{id}',[EmployeeController::class,'editEmployee']);
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
-});
+Route::Get('/employee',[EmployeeController::class,'getAllEmployee']);
 
 
 
@@ -91,3 +80,4 @@ Route::Post('/project',[ProjectController::class,'addProject']);
 Route::Get('/project/{id}',[ProjectController::class,'getProject']);
 Route::Delete('/project/{id}',[ProjectController::class,'deleteProject']);
 Route::Patch('/project/{id}',[ProjectController::class,'editProject']);
+Route::Get('/project',[ProjectController::class,'getAllProject']);

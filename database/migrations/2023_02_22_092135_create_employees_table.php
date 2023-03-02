@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->integer('employee_id')->unique();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('picture')->nullable();
             $table->unsignedBigInteger('team_id');
