@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class Admin extends Authenticatable implements JWTSubject 
+class Admin extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
@@ -17,16 +17,19 @@ class Admin extends Authenticatable implements JWTSubject
         'last_name',
         'email',
         'password',
+        'is_super_admin'
     ];
 
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
- 
-    public function getJWTCustomClaims() { 
-         return [];
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
-    
+
     public function getAuthPassword()
     {
         return $this->password;

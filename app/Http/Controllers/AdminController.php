@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
     //Create a new instance
-    public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'addAdmin']]);
     }
 
-    public function getAllAdmins(){
+    public function getAllAdmins()
+    {
 
         $admins = Admin::all();
 
@@ -24,58 +26,66 @@ class AdminController extends Controller
         ]);
     }
 
-    public function getAdminByID($id){
+    public function getAdminByID($id)
+    {
 
-        $admin =  Admin::find($id);
+        $admin = Admin::find($id);
 
         return response()->json([
             'message' => $admin,
         ]);
     }
-    
-    public function deleteAdmin(Request $request, $id){
-        $admin =  Admin::find($id);
+
+    public function deleteAdmin(Request $request, $id)
+    {
+        $admin = Admin::find($id);
         $admin->delete();
         return response()->json([
             'message' => 'Admin Deleted Successfully!'
         ]);
     }
 
-    public function editAdmin(Request $request, $id){
-        $admin  = Admin::find($id);
-        $inputs = $request->except('password','_method');
+    public function editAdmin(Request $request, $id)
+    {
+        $admin = Admin::find($id);
+        $inputs = $request->except('password', '_method');
         $admin->update($inputs);
         if ($request->has('password')) {
-            $password = Hash::make($request->input('password'));
-            $admin->update(['password' => $password]);
+            $password = $request->input('password');
+            echo $password;
+            $admin->update(['password' => bcrypt($password)]);
         }
         return response()->json([
-           'message' => 'Admin Updated Successfully',
-           'updated' => $admin,
+            'message' => 'Admin Updated Successfully',
+            'updated' => $admin,
         ]);
     }
 
-    public function addAdmin(Request $request) {
+    public function addAdmin(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|between:2,100',
             'last_name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $admin = Admin::create(array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password)]
-                ));
+        $admin = Admin::create(
+            array_merge(
+                $validator->validated(),
+                ['password' => bcrypt($request->password)]
+            )
+        );
         return response()->json([
             'message' => 'User successfully registered',
             'admin' => $admin
         ], 201);
     }
-    
-    public function login(Request $request){
+
+    public function login(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -83,18 +93,20 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        if (! $token = auth()->attempt($validator->validated())) {
+        if (!$token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
     }
-    
-     public function logout() {
+
+    public function logout()
+    {
         auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }
 
-        protected function createNewToken($token){
+    protected function createNewToken($token)
+    {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
@@ -103,4 +115,3 @@ class AdminController extends Controller
         ]);
     }
 }
-
