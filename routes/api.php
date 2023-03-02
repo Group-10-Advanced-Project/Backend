@@ -11,6 +11,8 @@ use App\Http\Controllers\KpiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RoleController;
+
 
 
 
@@ -44,10 +46,10 @@ Route::Put('/editKpi/{id}',[KpiController::class,'editKpi']);
 
 
 //Role routes
-Route::Post('/Role',[KpiController::class,'addRole']);
-Route::Get('/getRole/{id}',[KpiController::class,'getRole']);
-Route::delete('/deleteRole/{id}',[KpiController::class,'deleteRole']);    
-Route::Put('/editRole/{id}',[KpiController::class,'editRole']);  
+Route::Post('/Role',[RoleController::class,'addRole']);
+Route::Get('/getRole/{id}',[RoleController::class,'getRole']);
+Route::delete('/deleteRole/{id}',[RoleController::class,'deleteRole']);    
+Route::Put('/editRole/{id}',[RoleController::class,'editRole']);  
 
 //admin routes
 Route::Post('/admin', [AdminController::class, "addAdmin"]);
