@@ -9,7 +9,6 @@ use App\Http\Controllers\EvaluationController;
 
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoleController;
 
@@ -41,6 +40,7 @@ Route::Delete('/evaluation/{id}', [EvaluationController::class, 'deleteEvaluatio
 //kpi routes
 Route::Post('/kpi',[KpiController::class,'addKpi']);
 Route::Get('/getkpi/{id}',[KpiController::class,'getKpi']);
+Route::Get('/getAllkpi',[KpiController::class,'getAllKpis']);
 Route::delete('/deletekpi/{id}',[KpiController::class,'deleteKpi']);    
 Route::Put('/editKpi/{id}',[KpiController::class,'editKpi']);    
 
@@ -63,17 +63,6 @@ Route::Post('/employee',[EmployeeController::class,'addEmployee']);
 Route::Get('/employee/{id}',[EmployeeController::class,'getEmployee']);
 Route::Delete('/employee/{id}',[EmployeeController::class,'deleteEmployee']);
 Route::Patch('/employee/{id}',[EmployeeController::class,'editEmployee']);
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
-});
 
 
 

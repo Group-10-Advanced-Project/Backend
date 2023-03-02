@@ -74,21 +74,14 @@ class TeamController extends Controller
     }
 
     //get team by name
-public function getTeamByName($teamname)
+public function getTeamByName($name)
 {
-    echo ($teamname);
-    echo "123";
-    if (!$teamname || trim($teamname) === '') {
-        $response = [
-            'status' => 400,
-            'message' => 'Team name cannot be empty.',
-            'data' => null,
-        ];
-        return $response;
-    }
+   
+    
+ 
 
  
-    $team = Team::where('name', trim($teamname) )->first();
+    $team = Team::where('name', trim($name) )->first();
     if ($team) {
         $response = [
             'status' => 200,
