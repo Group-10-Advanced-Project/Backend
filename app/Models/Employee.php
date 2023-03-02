@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
-//     public function team(){
-// return $this->belongsTo(Team::class);
 
-//     }
+
+
+    // Relation For The Evaluation
+    public function evaluation(){
+        return $this-> hasMany(Evaluation::class);
+    }
+
+
 protected $fillable = [
     'first_name',
     'email',
@@ -19,4 +24,9 @@ protected $fillable = [
     'phone_number',
     'employee_id',
 ];
+
+
+    public function team(){
+        return $this->belongsTo(Team::class);
+    }
 }
