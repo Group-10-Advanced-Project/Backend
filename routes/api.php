@@ -11,6 +11,7 @@ use App\Http\Controllers\KpiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProjectesController;
 
 
 
@@ -77,3 +78,9 @@ Route::Get('/team/teamname/{name}', [TeamController::class, 'getTeamByName']);
 Route::Get('/team/{id}', [TeamController::class, 'getTeamById']);
 Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
 Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
+
+// project routes 
+Route::Post('/project',[ProjectesController::class,'addProject']);
+Route::Get('/project/{id}',[ProjectesController::class,'getProject']);
+Route::Delete('/project/{id}',[ProjectesController::class,'deleteProject']);
+Route::Patch('/project/{id}',[ProjectesController::class,'editProject']);
