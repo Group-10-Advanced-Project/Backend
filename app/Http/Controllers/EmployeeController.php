@@ -20,11 +20,11 @@ class EmployeeController extends Controller
                 'email' => 'required|email',
                 'phone_number' => 'required',
                 'picture' => 'required|image|max:2048',
-                //'team_id' => 'required'
+                'team_id' => 'required|exists:teams,id',
             ]);
 
             if ($validator->fails()) {
-                throw new \Exception(json_encode(['error' => $validator->errors()]), 400);
+                throw new \Exception(json_encode(['error' => $validator->errors()]), 422);
             }
 
             $employee = new Employee();
@@ -41,7 +41,8 @@ class EmployeeController extends Controller
             $employee->save();
 
             return response()->json([
-                'message' => 'Employee created successfully!'
+                'message' => 'Employee created successfully!',
+                'employee'=>$employee,
             ]);
         } catch (\Exception $err) {
             return response()->json(['error' => json_decode($err->getMessage(), true)], $err->getCode());
@@ -54,7 +55,7 @@ class EmployeeController extends Controller
             $employee = Employee::where('id', $id) /*->with(['teams'])*/->get();
 
             if (!$employee) {
-                throw new \Exception(json_encode(['error' => 'Employee not found']), 404);
+                throw new \Exception(json_encode(['error' => 'Employee not found']), 422);
             }
 
             return response()->json([
@@ -97,7 +98,7 @@ class EmployeeController extends Controller
                 'email' => 'sometimes|required|email',
                 'phone_number' => 'sometimes|required',
                 'picture' => 'sometimes|required|image|max:2048',
-                // 'team_id' => 'sometimes|required',
+                'team_id' => 'sometimes|required',
             ]);
 
             if ($validator->fails()) {
@@ -110,6 +111,10 @@ class EmployeeController extends Controller
                 $picture_path = $request->file('picture')->store('pictures', 'public');
                 $employee->picture = $picture_path;
             }
+            if($request->hasFile('teams')){
+                $employee->teams()->sync(json_decode($request->input('teams')));
+            }
+    
 
             $employee->update([
                 'first_name' => $request->input('first_name'),
