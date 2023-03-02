@@ -43,6 +43,12 @@ Route::delete('/deletekpi/{id}',[KpiController::class,'deleteKpi']);
 Route::Put('/editKpi/{id}',[KpiController::class,'editKpi']);    
 
 
+//Role routes
+Route::Post('/Role',[KpiController::class,'addRole']);
+Route::Get('/getRole/{id}',[KpiController::class,'getRole']);
+Route::delete('/deleteRole/{id}',[KpiController::class,'deleteRole']);    
+Route::Put('/editRole/{id}',[KpiController::class,'editRole']);  
+
 //admin routes
 Route::Post('/admin', [AdminController::class, "addAdmin"]);
 Route::Get('/admin', [AdminController::class, "getAllAdmins"]);
