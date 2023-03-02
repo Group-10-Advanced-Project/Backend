@@ -74,25 +74,37 @@ class TeamController extends Controller
     }
 
     //get team by name
-    public function getTeamByName( $name)
-    {
-        $team = Team::where('name', $name)->get();
-        if (!empty($team)) {
-        $team = [
-                'status' => 200,
-                'message' => 'Retrieved team successfully!',
-                'data' => $team,
-            ];
-            return $team;
-        } else  {
-            $error = [
-                'status' => 404,
-                'message' => 'no team with this name',
-                'data' => null,
-            ];
-            return $error;
-        }
+public function getTeamByName($teamname)
+{
+    echo ($teamname);
+    echo "123";
+    if (!$teamname || trim($teamname) === '') {
+        $response = [
+            'status' => 400,
+            'message' => 'Team name cannot be empty.',
+            'data' => null,
+        ];
+        return $response;
     }
+
+ 
+    $team = Team::where('name', trim($teamname) )->first();
+    if ($team) {
+        $response = [
+            'status' => 200,
+            'message' => 'Retrieved team successfully!',
+            'data' => $team,
+        ];
+    } else {
+        $response = [
+            'status' => 404,
+            'message' => 'No team found with this name.',
+            'data' => null,
+        ];
+    }
+    return $response;
+}
+
 
     //edit team by id
     public function editTeam(Request $request, $id)
