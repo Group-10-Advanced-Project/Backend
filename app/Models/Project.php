@@ -12,4 +12,10 @@ class Project extends Model
     public function Team(){
         return $this->belongsTo(Team::class);
     }
+    protected $fillable = [
+        'name',
+        'about',
+        'status',
+
+    ];
 }

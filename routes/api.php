@@ -12,6 +12,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProjectController;
 
 
 
@@ -85,3 +86,8 @@ Route::Get('/team/teamname/{name}', [TeamController::class, 'getTeamByName']);
 Route::Get('/team/id/{id}', [TeamController::class, 'getTeamById']);
 Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
 Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
+
+Route::Post('/project',[ProjectController::class,'addProject']);
+Route::Get('/project/{id}',[ProjectController::class,'getProject']);
+Route::Delete('/project/{id}',[ProjectController::class,'deleteProject']);
+Route::Patch('/project/{id}',[ProjectController::class,'editProject']);
