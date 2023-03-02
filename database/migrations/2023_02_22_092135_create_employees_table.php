@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->string('email');
             $table->string('phone_number');
             $table->string('picture')->nullable();
-            $table->unsignedBigInteger('team_id')->unique();
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete(cascade);
+            $table->unsignedBigInteger('team_id');
+            $table->foreign('team_id')->references('id')->on('teams');
             $table->timestamps();
         });
     }
