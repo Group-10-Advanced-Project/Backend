@@ -63,6 +63,8 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
+    Route::Post('/login', [AdminController::class, "login"]);
+    Route::Post('/logout', [AdminController::class, "logout"]);
     Route::Post('/addadmin', [AdminController::class, "addAdmin"]);
     Route::Get('/admin', [AdminController::class, "getAllAdmins"]);
     Route::Get('/admin/{id}', [AdminController::class, "getAdminByID"]);

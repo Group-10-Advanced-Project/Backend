@@ -13,7 +13,7 @@ class AdminController extends Controller
     //Create a new instance
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'addAdmin']]);
     }
 
     public function getAllAdmins()
@@ -53,7 +53,7 @@ class AdminController extends Controller
         if ($request->has('password')) {
             $password = $request->input('password');
             echo $password;
-            $admin->update(['password' => $password]);
+            $admin->update(['password' => bcrypt($password)]);
         }
         return response()->json([
             'message' => 'Admin Updated Successfully',
