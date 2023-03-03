@@ -55,7 +55,7 @@ class EmployeeController extends Controller
     public function getEmployee(Request $request, $id)
     {
         try {
-            $employee = Employee::where('id', $id) /*->with(['teams'])*/->get();
+            $employee = Employee::where('employee_id', $id) /*->with(['teams'])*/->get();
 
             if (!$employee) {
                 throw new \Exception(json_encode(['error' => 'Employee not found']), 422);
