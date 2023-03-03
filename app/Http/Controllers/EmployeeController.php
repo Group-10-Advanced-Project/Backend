@@ -72,27 +72,28 @@ class EmployeeController extends Controller
 
     public function deleteEmployee(Request $request, $id)
     {
-        try {
-            $employee = Employee::find($id);
-
-            if (!$employee) {
-                throw new \Exception(json_encode(['error' => 'Employee not found']), 404);
-            }
-
-            Storage::delete('public/' . $employee->picture);
-            $employee->delete();
-
-            return response()->json([
-                'message' => 'Employee deleted successfully!'
-            ]);
-        } catch (\Exception $err) {
-            return response()->json(['error' => json_decode($err->getMessage(), true)], $err->getCode());
-        }
+        $employee = Employee::where('employee_id', $id) /*->with(['teams'])*/->delete();
+        if ($employee) {
+        // $employee->delete();
+        $response = [
+            
+            'message' => 'Employee deleted successfully!',
+            
+        ];
+        return $response;
+    } else {
+        $error= [
+            
+            'message' => 'Employee not found',
+            
+        ];
+        return $error;
+    }
     }
     public function editEmployee(Request $request, $id)
     {
         try {
-            $employee = Employee::findOrFail($id);
+            $employee =Employee::where('employee_id', $id)->firstOrFail();;
 
             $validator = Validator::make($request->all(), [
                 'employee_id' => 'sometimes|required',
