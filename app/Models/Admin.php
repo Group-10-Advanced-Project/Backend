@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Contracts\Auth\Authenticatable as SecondAuthenticatable;
 
 
-class Admin extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable implements JWTSubject, SecondAuthenticatable
 {
     use HasFactory;
 

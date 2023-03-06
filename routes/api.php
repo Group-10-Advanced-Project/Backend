@@ -54,13 +54,14 @@ Route::Put('/editRole/{id}', [RoleController::class, 'editRole']);
 
 //employee routes
 
-Route::Post('/employee',[EmployeeController::class,'addEmployee']);
-Route::Get('/employee/{id}',[EmployeeController::class,'getEmployee']);
-Route::Delete('/employee/{id}',[EmployeeController::class,'deleteEmployee']);
-Route::Patch('/employee/{id}',[EmployeeController::class,'editEmployee']);
-Route::Get('/employee',[EmployeeController::class,'getAllEmployee']);
+Route::Post('/employee', [EmployeeController::class, 'addEmployee']);
+Route::Get('/employee/{id}', [EmployeeController::class, 'getEmployee']);
+Route::Delete('/employee/{id}', [EmployeeController::class, 'deleteEmployee']);
+Route::Patch('/employee/{id}', [EmployeeController::class, 'editEmployee']);
+Route::Get('/employee', [EmployeeController::class, 'getAllEmployee']);
 
 
+Route::middleware('check_super_admin')->get('/admin', [AdminController::class, "getAllAdmins"]);
 //admin routes
 Route::group([
     'middleware' => 'api',
@@ -69,7 +70,6 @@ Route::group([
     Route::Post('/login', [AdminController::class, "login"]);
     Route::Post('/logout', [AdminController::class, "logout"]);
     Route::Post('/addadmin', [AdminController::class, "addAdmin"]);
-    Route::Get('/admin', [AdminController::class, "getAllAdmins"]);
     Route::Get('/admin/{id}', [AdminController::class, "getAdminByID"]);
     Route::Delete('/admin/{id}', [AdminController::class, "deleteAdmin"]);
     Route::Patch('/admin/{id}', [AdminController::class, "editAdmin"]);
@@ -88,9 +88,8 @@ Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
 Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
 
 
-Route::Post('/project',[ProjectController::class,'addProject']);
-Route::Get('/project/{id}',[ProjectController::class,'getProject']);
-Route::Delete('/project/{id}',[ProjectController::class,'deleteProject']);
-Route::Patch('/project/{id}',[ProjectController::class,'editProject']);
-Route::Get('/project',[ProjectController::class,'getAllProject']);
-
+Route::Post('/project', [ProjectController::class, 'addProject']);
+Route::Get('/project/{id}', [ProjectController::class, 'getProject']);
+Route::Delete('/project/{id}', [ProjectController::class, 'deleteProject']);
+Route::Patch('/project/{id}', [ProjectController::class, 'editProject']);
+Route::Get('/project', [ProjectController::class, 'getAllProject']);
