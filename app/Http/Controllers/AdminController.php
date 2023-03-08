@@ -13,7 +13,7 @@ class AdminController extends Controller
     //Create a new instance
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'addAdmin']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function getAllAdmins()
@@ -79,7 +79,7 @@ class AdminController extends Controller
                 $validator->validated(),
                 ['password' => bcrypt($request->password)]
             )
-        );  
+        );
         return response()->json([
             'message' => 'User successfully registered',
             'admin' => $admin
