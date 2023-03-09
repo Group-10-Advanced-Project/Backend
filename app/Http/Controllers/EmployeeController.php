@@ -39,7 +39,8 @@ class EmployeeController extends Controller
             $employee->email = $request->input('email');
             $employee->phone_number = $request->input('phone_number');
             $picture_path = $request->file('picture')->store('pictures', 'public');
-            $employee->picture = $picture_path;
+            $url = Storage::url($picture_path);
+            $employee->picture = $url;
             $team_id = $request->input('team_id');
             $team = Team::find($team_id);
             $employee->team()->associate($team);
