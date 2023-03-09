@@ -112,9 +112,13 @@ class EmployeeController extends Controller
 
             // Update employee details
             if ($request->hasFile('picture')) {
+                // Delete the old image
                 Storage::delete('public/' . $employee->picture);
+    
+                // Save the new image
                 $picture_path = $request->file('picture')->store('pictures', 'public');
-                $employee->picture = $picture_path;
+                $url = Storage::url($picture_path);
+                $employee->picture = $url;
             }
             if($request->hasFile('teams')){
                 $employee->teams()->sync(json_decode($request->input('teams')));
