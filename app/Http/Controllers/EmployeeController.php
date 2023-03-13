@@ -147,31 +147,31 @@ class EmployeeController extends Controller
     }
 
 
-//     public function getAllEmployee(Request $request){
-//         {
+    public function getAllEmployee(Request $request){
+        {
            
           
-//             $perPage = $request->input('per_page', 10);
+            $perPage = $request->input('per_page', 20);
 
-//             $employee = Employee::paginate($perPage);
-//                 // ->with(['employee', 'recurring']);
-//                 // ->orderBy('email')
-//                 // ->paginate($perPage);
+            $employee = Employee::paginate($perPage);
+                // ->with(['employee', 'recurring']);
+                // ->orderBy('email')
+                // ->paginate($perPage);
         
-//             return response()->json(
-//                 // 'message' => 'Successfully got Employee',
-//                 // 'data' => 
-//                 $employee,
-//             );
+            return response()->json(
+                // 'message' => 'Successfully got Employee',
+                // 'data' => 
+                $employee,
+            );
            
-//         }
-// }
-public function getAllEmployee()
-{
-    $employees = Employee::get();
-
-    return response()->json(
-         $employees
-    );
+        }
 }
+// public function getAllEmployee()
+// {
+//     $employees = Employee::get();
+
+//     return response()->json(
+//          $employees
+//     );
+// }
  }
