@@ -153,7 +153,7 @@ class EmployeeController extends Controller
           
             $perPage = $request->input('per_page', 20);
 
-            $employee = Employee::paginate($perPage);
+            $employee = Employee::with('team')->paginate($perPage);
                 // ->with(['employee', 'recurring']);
                 // ->orderBy('email')
                 // ->paginate($perPage);
