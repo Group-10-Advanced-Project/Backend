@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::Post('/evaluation', [EvaluationController::class, 'addEvaluation']);
 Route::Get('/evaluation', [EvaluationController::class, 'getEvaluation']);
 Route::Get('/evaluation/{id}', [EvaluationController::class, 'getEvaluationById']);
-Route::Patch('/evaluation/{id}', [EvaluationController::class, 'updateEvaluation']);
+Route::Post('/evaluation/{id}', [EvaluationController::class, 'updateEvaluation']);
 Route::Delete('/evaluation/{id}', [EvaluationController::class, 'deleteEvaluation']);
 
 //kpi routes
@@ -43,7 +43,7 @@ Route::Post('/kpi', [KpiController::class, 'addKpi']);
 Route::Get('/getkpi/{id}', [KpiController::class, 'getKpi']);
 Route::Get('/getAllkpi', [KpiController::class, 'getAllKpis']);
 Route::delete('/deletekpi/{id}', [KpiController::class, 'deleteKpi']);
-Route::Put('/editKpi/{id}', [KpiController::class, 'editKpi']);
+Route::Post('/editKpi/{id}', [KpiController::class, 'editKpi']);
 
 
 //Role routes
@@ -57,7 +57,7 @@ Route::Put('/editRole/{id}', [RoleController::class, 'editRole']);
 Route::Post('/employee', [EmployeeController::class, 'addEmployee']);
 Route::Get('/employee/{id}', [EmployeeController::class, 'getEmployee']);
 Route::Delete('/employee/{id}', [EmployeeController::class, 'deleteEmployee']);
-Route::Patch('/employee/{id}', [EmployeeController::class, 'editEmployee']);
+Route::Post('/employee/{id}', [EmployeeController::class, 'editEmployee']);
 Route::Get('/employee', [EmployeeController::class, 'getAllEmployee']);
 
 
@@ -72,7 +72,7 @@ Route::group([
     Route::Post('/addadmin', [AdminController::class, "addAdmin"]);
     Route::Get('/admin/{id}', [AdminController::class, "getAdminByID"]);
     Route::Delete('/admin/{id}', [AdminController::class, "deleteAdmin"]);
-    Route::Patch('/admin/{id}', [AdminController::class, "editAdmin"]);
+    Route::Post('/admin/{id}', [AdminController::class, "editAdmin"]);
 });
 
 
@@ -85,11 +85,11 @@ Route::Get('/team', [TeamController::class, 'getAllTeams']);
 Route::Get('/team/teamname/{name}', [TeamController::class, 'getTeamByName']);
 Route::Get('/team/id/{id}', [TeamController::class, 'getTeamById']);
 Route::delete('/team/{id}', [TeamController::class, 'deleteTeam']);
-Route::Patch('/team/{id}', [TeamController::class, 'editTeam']);
+Route::Post('/team/{id}', [TeamController::class, 'editTeam']);
 
 
 Route::Post('/project', [ProjectController::class, 'addProject']);
 Route::Get('/project/{id}', [ProjectController::class, 'getProject']);
 Route::Delete('/project/{id}', [ProjectController::class, 'deleteProject']);
-Route::Patch('/project/{id}', [ProjectController::class, 'editProject']);
+Route::Post('/project/{id}', [ProjectController::class, 'editProject']);
 Route::Get('/project', [ProjectController::class, 'getAllProject']);
