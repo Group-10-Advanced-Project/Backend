@@ -124,18 +124,18 @@ class ProjectController extends Controller
     public function getAllProject(Request $request){
         {
            
-          
-            $perPage = $request->input('per_page', 10);
+            $perPage = $request->input('per_page', 20);
 
-            $projects = Project::where('name', '<=', now())
-                ->with(['project', 'recurring'])
-                ->orderBy('name')
-                ->paginate($perPage);
+            $project = Project::with('team')->paginate($perPage);
+                // ->with(['employee', 'recurring']);
+                // ->orderBy('email')
+                // ->paginate($perPage);
         
-            return response()->json([
-                'message' => 'Successfully got project',
-                'data' => $projects,
-            ]);
+            return response()->json(
+                // 'message' => 'Successfully got Employee',
+                // 'data' => 
+                $project,
+            );
            
         }
         

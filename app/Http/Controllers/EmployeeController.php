@@ -39,7 +39,8 @@ class EmployeeController extends Controller
             $employee->email = $request->input('email');
             $employee->phone_number = $request->input('phone_number');
             $picture_path = $request->file('picture')->store('pictures', 'public');
-            $employee->picture = $picture_path;
+            $url = Storage::url($picture_path);
+            $employee->picture = $url;
             $team_id = $request->input('team_id');
             $team = Team::find($team_id);
             $employee->team()->associate($team);
@@ -111,9 +112,13 @@ class EmployeeController extends Controller
 
             // Update employee details
             if ($request->hasFile('picture')) {
+                // Delete the old image
                 Storage::delete('public/' . $employee->picture);
+    
+                // Save the new image
                 $picture_path = $request->file('picture')->store('pictures', 'public');
-                $employee->picture = $picture_path;
+                $url = Storage::url($picture_path);
+                $employee->picture = $url;
             }
             if($request->hasFile('teams')){
                 $employee->teams()->sync(json_decode($request->input('teams')));
@@ -146,18 +151,27 @@ class EmployeeController extends Controller
         {
            
           
-            $perPage = $request->input('per_page', 10);
+            $perPage = $request->input('per_page', 20);
 
-            $employee = Employee::where('email', '<=', now())
-                ->with(['employee', 'recurring'])
-                ->orderBy('email')
-                ->paginate($perPage);
+            $employee = Employee::with('team')->paginate($perPage);
+                // ->with(['employee', 'recurring']);
+                // ->orderBy('email')
+                // ->paginate($perPage);
         
-            return response()->json([
-                'message' => 'Successfully got Employee',
-                'data' => $employee,
-            ]);
+            return response()->json(
+                // 'message' => 'Successfully got Employee',
+                // 'data' => 
+                $employee,
+            );
            
         }
 }
-}
+// public function getAllEmployee()
+// {
+//     $employees = Employee::get();
+
+//     return response()->json(
+//          $employees
+//     );
+// }
+ }
