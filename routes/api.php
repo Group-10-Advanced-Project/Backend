@@ -57,7 +57,7 @@ Route::Patch('/editRole/{id}', [RoleController::class, 'editRole']);
 Route::Post('/employee', [EmployeeController::class, 'addEmployee']);
 Route::Get('/employee/{id}', [EmployeeController::class, 'getEmployee']);
 Route::Delete('/employee/{id}', [EmployeeController::class, 'deleteEmployee']);
-Route::Patch('/employee/{id}', [EmployeeController::class, 'editEmployee']);
+Route::Patch('/Editemployee/{id}', [EmployeeController::class, 'editEmployee']);
 Route::Get('/employee', [EmployeeController::class, 'getAllEmployee']);
 
 
@@ -66,7 +66,7 @@ Route::middleware('check_super_admin')->get('/admin', [AdminController::class, "
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
-], function ($router) {
+], function ($router) {  
     Route::Post('/login', [AdminController::class, "login"]);
     Route::Post('/logout', [AdminController::class, "logout"]);
     Route::Post('/addadmin', [AdminController::class, "addAdmin"]);
